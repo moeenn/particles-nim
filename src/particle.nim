@@ -3,6 +3,7 @@ import std/random
 import math
 import ./common
 
+
 type
   Particle* = ref object
     pos: Vec2

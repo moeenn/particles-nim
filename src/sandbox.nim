@@ -4,6 +4,7 @@ import ./common
 import ./particle
 import ./line
 
+
 const APP_NAME = "Game"
 const SCREEN_SIZE = Dimensions(width: 800, height: 600)
 const PARTICLE_COUNT = 1500
