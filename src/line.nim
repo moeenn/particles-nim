@@ -1,19 +1,30 @@
 import nico
+import ./particle
 import ./common
 
-type
-  Line* = ref object
-    startPos: Vec2
-    endPos: Vec2
-    color: int = 3
+proc renderLine(startPos, endPos: Vec2, color: int = 3) =
+  setColor(color)
+  line(startPos.x, startPos.y, endPos.x, endPos.y)
 
-func NewLine*(startPos, endPos: Vec2): Line =
-  return Line(startPos: startPos, endPos: endPos)
+proc renderPromixityLines*(particles: seq[Particle], distanceThreshold: int) =
+  if particles.len == 0:
+    return
 
-func update*(self: Line, startPos, endPos: Vec2) =
-  self.startPos = startPos
-  self.endPos = endPos
+  var i = 0
+  var j = 1
+  var a, b: Particle
 
-proc render*(self: Line) =
-  setColor(self.color)
-  line(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
+  while i < j:
+    a = particles[i]
+    b = particles[j]
+
+    if a.distance(b) <= distanceThreshold:
+      renderLine(a.getPos(), b.getPos())
+
+    j += 1
+    if j == particles.len:
+      i += 1
+      j = i + 1
+
+    if i == particles.len-1:
+      break

@@ -4,48 +4,37 @@ import ./common
 import ./particle
 import ./line
 
-type
-  Config = object
-    orgName: string = "Game"
-    appName: string = "Game"
-    screen: Dimensions = Dimensions(width: 800, height: 600)
-    particleCount: int = 1000
-    particleSpeedFactor: int = 2
-
-type
-  State = ref object
-    particles: seq[Particle] = @[]
-    lines: seq[Line] = @[]
-
-
-const config = Config()
-var state = State()
+const APP_NAME = "Game"
+const SCREEN_SIZE = Dimensions(width: 800, height: 600)
+const PARTICLE_COUNT = 1500
+const PARTICLE_SPEED_FACTOR = 1
+const LINE_DISTANCE_THRESHOLD = 50
+var particles: seq[Particle] = @[]
 
 
 proc gameInit() =
   randomize()
-  for i in 0..config.particleCount:
-    var pos = RandomPosition(config.screen)
-    var particle = NewParticle(pos, config.screen, config.particleSpeedFactor)
-    state.particles.add(particle)
+  for i in 0..PARTICLE_COUNT:
+    var pos = randomPosition(SCREEN_SIZE)
+    var particle = newParticle(pos, SCREEN_SIZE, PARTICLE_SPEED_FACTOR)
+    particles.add(particle)
 
 
 proc gameUpdate(dt: float32) =
-  for particle in state.particles:
+  for particle in particles:
     particle.update()
 
 
 proc gameDraw() =
   cls()
-
-  for particle in state.particles:
+  renderPromixityLines(particles, LINE_DISTANCE_THRESHOLD)
+  for particle in particles:
     particle.render()
 
 
-
 proc main() =
-  nico.init(config.orgName, config.appName)
-  nico.createWindow(config.appName, config.screen.width, config.screen.height, 1, false)
+  nico.init(APP_NAME, APP_NAME)
+  nico.createWindow(APP_NAME, SCREEN_SIZE.width, SCREEN_SIZE.height, 1, false)
   nico.run(gameInit, gameUpdate, gameDraw)
 
 

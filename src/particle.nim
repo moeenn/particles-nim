@@ -1,17 +1,18 @@
 import nico
 import std/random
+import math
 import ./common
 
 type
   Particle* = ref object
     pos: Vec2
     color: int = 4
-    radius: int = 3
+    radius: int = 2
     screenDimensions: Dimensions
     xSpeed: int
     ySpeed: int
 
-proc NewParticle*(pos: Vec2, screenDimensions: Dimensions,
+proc newParticle*(pos: Vec2, screenDimensions: Dimensions,
     speedFactor: int): Particle =
   var xSpeed = rand(speedFactor)
   var ySpeed = rand(speedFactor)
@@ -45,3 +46,10 @@ proc update*(self: Particle) =
 proc render*(self: Particle) =
   setColor(self.color)
   circfill(self.pos.x, self.pos.y, self.radius)
+
+func getPos*(self: Particle): Vec2 = self.pos
+
+func distance*(self: Particle, other: Particle): int =
+  let xDelta = (self.pos.x - other.pos.x) ^ 2
+  let yDelta = (self.pos.y - other.pos.y) ^ 2
+  return sqrt(float32(xDelta + yDelta)).toInt()
