@@ -1,15 +1,9 @@
-import ./game/game
-import ./game/config
+import game/game
 
 
 proc main() =
-  var config = Config(
-    particleCount: 100,
-    particleSpeedFactor: 1,
-    lineDistanceThreshold: 50,
-  )
-
-  var game = Game(config: config)
+  let config = game.configFromCommandLineFlags()
+  var game = game.Game(config: config)
   game.run()
 
 

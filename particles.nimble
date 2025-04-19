@@ -9,3 +9,6 @@ bin = @["particles"]
 # Dependencies
 requires "nim >= 2.2.2"
 requires "nico >= 0.4.10"
+
+task release, "create a production release build":
+    exec "nimble build -d:release"

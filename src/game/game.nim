@@ -38,3 +38,9 @@ proc run*(self: Game) =
   nico.init(self.config.appName, self.config.appName)
   nico.createWindow(self.config.appName, self.config.screenSize.width, self.config.screenSize.height, 1, false)
   nico.run(self.gameInit(), self.gameUpdate(), self.gameDraw())
+
+
+export Game
+export run
+export Config
+export configFromCommandLineFlags
