@@ -3,14 +3,14 @@ import ./common
 
 type
   Line* = ref object
-    startPos: ref Vec2
-    endPos: ref Vec2
+    startPos: Vec2
+    endPos: Vec2
     color: int = 3
 
-func NewLine*(startPos, endPos: ref Vec2): Line =
+func NewLine*(startPos, endPos: Vec2): Line =
   return Line(startPos: startPos, endPos: endPos)
 
-func update*(self: Line, startPos, endPos: ref Vec2) =
+func update*(self: Line, startPos, endPos: Vec2) =
   self.startPos = startPos
   self.endPos = endPos
 
