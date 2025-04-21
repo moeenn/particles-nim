@@ -5,7 +5,7 @@ import ./common
 
 
 type
-  Particle* = ref object
+  Particle* = object
     pos: Vec2
     color: int = 4
     radius: int = 2
@@ -34,7 +34,7 @@ proc newParticle*(pos: Vec2, screenDimensions: Dimensions,
     ySpeed: if yDirection mod 2 == 0: ySpeed else: ySpeed * -1,
   )
 
-proc update*(self: Particle) =
+proc update*(self: var Particle) =
   self.pos.x += self.xSpeed
   self.pos.y += self.ySpeed
 

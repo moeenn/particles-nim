@@ -1,12 +1,12 @@
 import nico
 import std/random
-import ./common
-import ./particle
-import ./line
-import ./config
+import common
+import particle
+import line
+import config
 
 type 
-  State = ref object
+  State = object
     particles: seq[Particle] = @[]
 
 type 
@@ -14,18 +14,19 @@ type
     config*: Config = Config()
     state: State = State()
 
-func gameInit(self: Game): proc() = 
-  return proc () = 
-    randomize()
-    for i in 0..self.config.particleCount:
-      var pos = randomPosition(self.config.screenSize)
-      var particle = newParticle(pos, self.config.screenSize, self.config.particleSpeedFactor)
-      self.state.particles.add(particle)
+proc gameInit(self: Game): proc() = 
+  randomize()
+  for i in 0..self.config.particleCount:
+    var pos = randomPosition(self.config.screenSize)
+    var particle = newParticle(pos, self.config.screenSize, self.config.particleSpeedFactor)
+    self.state.particles.add(particle)
+
+  return proc () = discard
 
 proc gameUpdate(self: Game): proc(dt: float32) = 
   return proc (dt: float32) =
-    for particle in self.state.particles:
-      particle.update()
+    for i in 0..<self.state.particles.len:
+      self.state.particles[i].update()
 
 proc gameDraw(self: Game): proc() = 
   return proc () =

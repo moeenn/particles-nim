@@ -6,7 +6,7 @@ type
     height*: int
 
 type
-  Vec2* = ref object
+  Vec2* = object
     x*: int
     y*: int
 
